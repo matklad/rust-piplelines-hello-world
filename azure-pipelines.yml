@@ -11,14 +11,27 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: echo hello from Linux
+  - script: curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable
+    displayName: 'Install rust'
+  - script: rustc --version
+  - script: cargo test
+    
 - job: macOS
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: echo hello from macOS
+  - script: curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable
+    displayName: 'Install rust'
+  - script: rustc --version
+  - script: cargo test
+
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - script: echo hello from Windows
+  - script: |
+      curl -sSf -o rustup-init.exe https://win.rustup.rs
+      rustup-init.exe -y --default-toolchain stable
+    displayName: 'Install rust'
+  - script: rustc --version
+  - script: cargo test
